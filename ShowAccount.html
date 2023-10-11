@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Account</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        a,a:hover
+        {
+            text-decoration: none;
+            color: white;
+        }
+        #table1
+        {
+        display: none;     
+        }
+        #phn
+        {
+            width: 40%;
+            float: left;
+            margin-right: 0.5%;
+        }
+        #btn
+        {
+            float: left;
+            margin-right: 0.5%;
+        }
+        
+    </style>
+</head>
+<body>
+    <br>
+    <br>
+    
+    <div class="container">
+        <br>
+        <button class="btn btn-danger" id="btn"><a href="CreateAccount.html">Back</a> </button>
+        <input type="text" placeholder="Search by Name or Phone Number" id="phn" oninput="Search()" list="recommended" class="form-control">
+        <datalist id="recommended">
+            <!-- <option value="89306040786"></option>
+            <option value="9499118296"></option>
+            <option value="58856785955"></option>
+            <option value="7816812542"></option> -->
+        </datalist>
+        <button id="btn" onclick="Get()" class="btns btn btn-danger">Balanced Accounts</button>
+        <button id="btn" style="display: none;" onclick="Show()" class="btnss btn btn-danger">Show All</button>
+        <br><br>
+        <table id="table" class="table table-bordered table-striped table-hover">
+            <thead>
+                <th>S.No.</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Balance</th>
+                <th>Date</th>
+                <th>Operation</th>
+            </thead>
+            <tbody id="tbody">
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
+
+    <script>
+        var  firebaseConfig = {
+  apiKey: "AIzaSyA-teYBGhAa7KmYa2IW9wx66VUdmhsqzvI",
+  authDomain: "billing-565b3.firebaseapp.com",
+  databaseURL: "https://billing-565b3-default-rtdb.firebaseio.com",
+  projectId: "billing-565b3",
+  storageBucket: "billing-565b3.appspot.com",
+  messagingSenderId: "1079915732213",
+  appId: "1:1079915732213:web:eea86fe01231d9cba6f9bc"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+// datalist()
+// function datalist()
+// {
+//     firebase.database().ref("/Accounts/").on("value",function(Snap)
+//     {
+//         Obj=Snap.val()
+//        Allkey= Object.keys(Obj)
+//         var count=0;
+//         Allkey.map(function(key)
+//         {
+//             count=count+1
+//             if(count<=3)
+//             {
+//                 console.log(key);
+//             }
+//         })
+//     })
+// }
+function Search() {
+    AccountKey=JSON.parse(localStorage.getItem("AccountKey"))
+            var Search = document.getElementById("phn").value
+            document.getElementById("tbody").innerHTML = ""
+            firebase.database().ref().child(`Admin/${AccountKey}/Customers`).on("value", function (AllObj) {
+                Obj = AllObj.val()
+                if (Obj == null) {
+                    document.getElementById("tbody").innerHTML=""
+            record=document.createElement("th")
+            record.style.textAlign="center"
+            record.style.fontSize="20px"
+            record.innerHTML="No Records Found"
+            document.getElementById("tbody").append(record)
+                }
+                else {
+                    if (Search == "") {
+                        Show()
+                    }
+                    else {
+                        document.getElementById("tbody").innerHTML = ""
+                        KeyArr = Object.keys(Obj)
+                        KeyArr.reverse().map(function (key, index) {
+                            if (Obj[key].Phone.match(Search) || Obj[key].Name.match(Search)) {
+                                Table(index+1,Obj[key].Name,Obj[key].Phone,Obj[key].Email,Obj[key].Address,Obj[key].Date,Obj[key].Balance)
+                            }
+
+                        })
+                    }
+                }
+            })
+}
+Show()
+function Show()
+{
+    AccountKey=JSON.parse(localStorage.getItem("AccountKey"))
+    document.getElementById("tbody").innerHTML=""
+    firebase.database().ref().child("Admin").child(AccountKey).child("Customers").on("value",function(snap)
+    {
+        Obj=(snap.val())
+        if(Obj==null)
+        {
+            document.getElementById("tbody").innerHTML=""
+            record=document.createElement("th")
+            record.style.textAlign="center"
+            record.style.fontSize="20px"
+            record.innerHTML="No Records Found"
+            document.getElementById("tbody").append(record)
+        }
+        else
+        {   
+            document.getElementById("tbody").innerHTML=""
+            Allkey= Object.keys(Obj)
+        Allkey.reverse().map(function(key,index)
+        {
+            Table(index+1,Obj[key].Name,Obj[key].Phone,Obj[key].Email,Obj[key].Address,Obj[key].Date,Obj[key].Balance,key)
+        }
+        
+     )
+        } })
+     document.getElementsByClassName("btnss")[0].style.display="none"
+     document.getElementsByClassName("btns")[0].style.display="block"
+     }
+    
+function Table(index,name,phone,email,address,date,balance,key)
+{
+    row=document.createElement("tr")
+    cell1=document.createElement("td")
+    cell2=document.createElement("td")
+    cell3=document.createElement("td")
+    cell4=document.createElement("td")
+    cell5=document.createElement("td")
+    cell6=document.createElement("td")
+    cell7=document.createElement("td")
+    cell8=document.createElement("td")
+
+    cell1.innerHTML=index
+    cell2.innerHTML=name
+    cell3.innerHTML=phone
+    cell4.innerHTML=email
+    cell5.innerHTML=address
+    cell6.innerHTML=balance
+    cell7.innerHTML=date
+    
+
+
+    btn= document.createElement("button")
+    btn.innerHTML="View Account"
+    btn.className="btn btn-success"
+    btn.id=key
+    btn.setAttribute("onclick","Transaction(this)")
+    cell8.append(btn)
+
+    if(balance==0)
+    {
+    delbtn= document.createElement("button")
+    delbtn.innerHTML="Delete"
+    delbtn.className="btn btn-danger"
+    delbtn.id=key
+    delbtn.setAttribute("onclick","Del(this)")
+    cell8.append(delbtn)
+    }
+
+    row.append(cell1)
+    row.append(cell2)
+    row.append(cell3)
+    row.append(cell4)
+    row.append(cell5)
+    row.append(cell6)
+    row.append(cell7)
+    row.append(cell8)
+    document.getElementById("tbody").append(row)
+}
+function Transaction(Obutton)
+{
+    localStorage.setItem("Key",JSON.stringify(Obutton.id))
+    window.location.href="Account.html"
+}
+function Get()
+{
+    document.getElementById("tbody").innerHTML=""
+    firebase.database().ref().child("Admin").child(AccountKey).child("Customers").on("value",function(snap){
+        obj=snap.val()
+        if(obj==null)
+        {
+            document.getElementById("tbody").innerHTML=""
+            record=document.createElement("th")
+            record.style.textAlign="center"
+            record.style.fontSize="20px"
+            record.innerHTML="No Records Found"
+            document.getElementById("tbody").append(record)
+        }
+        else
+        {
+            Allkey=Object.keys(obj)
+            index=0
+            Allkey.map(function(key)
+          {
+         if(obj[key].Balance!=0)
+        {
+            index=index+1
+           Table(index,obj[key].Name,Obj[key].Phone,Obj[key].Email,Obj[key].Address,Obj[key].Date,Obj[key].Balance)
+        }
+    })
+        }
+    })
+    document.getElementsByClassName("btns")[0].style.display="none"
+    document.getElementsByClassName("btnss")[0].style.display="block"
+}
+function Del(Obutton)
+{
+    AccountKey=JSON.parse(localStorage.getItem("AccountKey"))
+    firebase.database().ref().child("Admin").child(AccountKey).child("Customers").child(Obutton.id).remove()
+}
+</script>
+</body>
+</html>

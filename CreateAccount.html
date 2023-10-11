@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        a
+        {
+            text-decoration: none;
+            color: #fff;
+        }
+        #i
+        {
+            margin-top: -15px;
+            padding-top: 0px;
+            color: red;
+       }
+       a:hover
+       {
+        text-decoration: none;
+        color: white;
+       }
+       h1
+       {
+        text-align: center;
+        font-size: 40px;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: 600;
+       }
+       #btn
+       {
+        float: left;
+        margin-right: 10px;
+       }
+    </style>
+</head>
+<body>
+
+<br>
+<br>
+    <div class="container">
+        <h1>Create Account of your Customer</h1>
+        
+       <br><br>
+       <div class="col-md-8"> 
+       <form action="#">
+            <div class="col-md-12 col-sm-12">
+                <label>Customer Name:</label>
+                <input type="text" class="form-control" id="Name" required placeholder="Enter Customer Name"><br>
+                <label>Customer Phone Number:</label>
+                <input type="number" class="form-control" id="Phone" oninput="check()" required placeholder="Enter Customer Phone Number"><br>
+                <h5 id="i"></h5>
+                <label>Customer Address:</label>
+                <input type="text" class="form-control" id="Address" required placeholder="Enter Customer Address"><br>
+                <label>Customer Email:</label>
+                <input type="email" class="form-control" id="Email" required placeholder="Enter Customer Email"><br>
+                <button type="submit" id="btn" class="btn btn-success" onclick="CreateAccount()">Create Account</button>
+                <button type="button" class="btn btn-primary"><a href="ShowAccount.html">Show Accounts</a></button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4" style="display: none;">
+        <img height="100%" width="100%" id="image" src="Images/Bharat.png" alt="">
+    </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
+
+    <script>
+        var  firebaseConfig = {
+  apiKey: "AIzaSyA-teYBGhAa7KmYa2IW9wx66VUdmhsqzvI",
+  authDomain: "billing-565b3.firebaseapp.com",
+  databaseURL: "https://billing-565b3-default-rtdb.firebaseio.com",
+  projectId: "billing-565b3",
+  storageBucket: "billing-565b3.appspot.com",
+  messagingSenderId: "1079915732213",
+  appId: "1:1079915732213:web:eea86fe01231d9cba6f9bc"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+        function CreateAccount()
+        {
+           AccountKey=JSON.parse(localStorage.getItem("AccountKey"))
+           name= document.getElementById("Name").value
+           phone= document.getElementById("Phone").value
+           address= document.getElementById("Address").value
+           email= document.getElementById("Email").value
+           image= document.getElementById("image").src
+
+           if(name!="" && phone!="")
+           {
+            var d=new Date()
+            var date=`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
+
+            var Obj={
+            Name:name,
+            Phone:phone,
+            Address:address,
+            Email:email,
+            Date:date,
+            Balance:0,
+            Image:image,
+            Transaction:[],
+           }
+           firebase.database().ref().child("Admin").child(AccountKey).child("Customers").push(Obj)
+           }          
+           Clear()
+        }
+        function Clear()
+        {
+            document.getElementById("Name").value=""
+            document.getElementById("Phone").value=""
+            document.getElementById("Address").value=""
+            document.getElementById("Email").value=""
+            window.location.reload()
+        }
+
+        function check()
+        {
+            AccountKey=JSON.parse(localStorage.getItem("AccountKey"))
+           phone= document.getElementById("Phone").value
+          if(phone=="")
+          {
+            document.getElementById("i").innerHTML=""
+            document.getElementById("btn").style.display="block"
+          }
+          else
+          {
+            firebase.database().ref().child(`Admin/${AccountKey}/Customers`).on("value",function(snap)
+           {
+            obj=snap.val()
+            
+            if(obj!=null)
+            {
+                Allkey=Object.keys(obj)
+                phn= Allkey.filter(function (key)
+                {
+                    return phone==obj[key].Phone
+                })
+                if(phn!="")
+                {
+                    document.getElementById("i").innerHTML="Account already exist on this Phone Number"
+                    document.getElementById("i").style.color="red"
+                    document.getElementById("btn").style.display="none"
+                }
+                else
+                {
+                    document.getElementById("i").innerHTML="No Account Found on this phone Number"
+                    document.getElementById("btn").style.display="block"
+                    document.getElementById("i").style.color="#5cb85d"  
+                }
+            }
+        })
+        
+          }
+        }
+    </script>
+    
+</body>
+</html>

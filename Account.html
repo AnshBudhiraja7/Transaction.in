@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Info</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body
+        {
+            overflow-x: hidden;
+            margin: 0%;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        #image1
+        {
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+        }
+        .image
+        {
+            height: 30%;
+            width: 10%;
+            background-size: cover;
+            position: relative;
+            top: 5vh;
+            text-align: center;
+        }
+        .blockA
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .content
+        {
+           position: relative;
+           top: 10vh;
+        }
+        .input
+        {
+            position: relative;
+            left: 20%;
+            margin-top: 0%;
+            width: 60%;
+            font-size: 20px;
+            line-height: 1;
+            margin-bottom: 0%;
+        }
+        label
+        {
+            position: relative;
+            left: 20%;
+            width: 60%;
+            font-size: 25px;
+        }
+        .i
+        {
+            text-align: left;
+            font-size: 20px;
+            margin-top: -1%;
+            text-transform: capitalize;
+        }
+        #email,#balance
+        {
+            text-align: right;
+        }
+        .sidenav {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 3;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+      }
+      
+      .sidenav a {
+        padding: 8px 8px 8px 32px;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+      }
+      
+      .sidenav a:hover {
+        color: #f1f1f1;
+        background-color: #5768f0;
+      }
+      .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        color: #fff;
+        cursor: pointer;
+        margin-left: 50px;
+        z-index: 1;
+      }
+      .closebtn:hover{
+        color: #f1f1f1;
+      }
+      
+      @media screen and (max-height: 450px) {
+        .sidenav {padding-top: 15px;}
+        .sidenav a {font-size: 18px;}
+      }
+      .open
+      {
+        font-size:30px;
+        cursor:pointer;
+      }
+      #box
+      {
+        display: none;
+      }
+      #down,#down1,#down2,#down3
+      {
+        float: right;
+        margin: 0.25%;
+        margin-bottom: 1%;
+        z-index: -10;
+        margin-top: -1.5%;
+      }
+      .overlay
+        {
+            height: 100vh;
+            position: fixed;
+            top: 0%;
+            width: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: -1;
+            opacity: 1;
+            transition: 1s;
+            display: none;
+            cursor: pointer;
+        }
+        #modal
+        {
+            height: 50vh;
+            background-color: white;
+            position: absolute;
+            top: 44%;
+            left: 50%;
+            transform: translate(-50%,-50%); 
+            box-shadow: 0px 0px 10px 3px grey;
+            z-index: 1;
+            transition: 2s;
+            padding: 0px 20px;
+            display: none;
+            text-align: center;
+        }
+        #modal1
+        {
+            height: 33vh;
+            background-color: white;
+            position: absolute;
+            top: 44%;
+            left: 50%;
+            transform: translate(-50%,-50%); 
+            box-shadow: 0px 0px 10px 3px grey;
+            z-index: 1;
+            transition: 2s;
+            padding: 0px 20px;
+            display: none;
+            text-align: center;
+        }
+        #modal2
+        {
+            height: 40vh;
+            background-color: white;
+            position: absolute;
+            top: 44%;
+            left: 50%;
+            transform: translate(-50%,-50%); 
+            box-shadow: 0px 0px 10px 3px grey;
+            z-index: 1;
+            transition: 2s;
+            padding: 0px 20px;
+            display: none;
+            text-align: center;
+        }
+        #modal3
+        {
+            height: 50vh;
+            background-color: white;
+            position: absolute;
+            top: 44%;
+            left: 50%;
+            transform: translate(-50%,-50%); 
+            box-shadow: 0px 0px 10px 3px grey;
+            z-index: 1;
+            transition: 2s;
+            padding: 0px 20px;
+            display: none;
+            text-align: center;
+        }
+        .cross
+        {
+            font-size: 30px;
+            font-weight: 600;
+            margin: 0%;
+            position: absolute;
+            right: 3%;
+            top: 2%;
+            cursor: pointer;
+        }
+        .pop
+        {
+            text-align: left;
+            font-size: 20px;
+        }
+        #label
+        {
+            position: relative;
+            left: 1%;
+            margin-bottom: -3%;
+            margin-top: 5%;
+        }
+        #label1
+        {
+            font-size: 20px;
+            text-wrap: nowrap;
+            position: relative;
+            left: 1%;
+            margin-bottom: -3%;
+            margin-top: 5%;
+        }
+        th,td
+        {
+            text-align: center;
+        }
+        #box2
+        {
+            margin-top: -3%;
+        }
+        .heading
+        {
+            position: relative;
+            top: 3vh;
+        }
+        #Save
+        {
+            margin: auto;
+            display: none;
+        }
+        #edit
+        {
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" onclick="Close()"></div>
+    <div id="mySidenav" class="sidenav">
+        <span class="closebtn" onclick="closeNav()">&times;</span>
+        <a onclick="AllAcc()">All Account</a>
+        <a onclick="Transaction()" id="trans">Transaction</a>
+        <a onclick="Account()" id="Account">Account Info</a>
+        <a onclick="Details()" id="Details">Change Details</a>
+      </div>
+      <span class="open" onclick="openNav()">&#9776;</span>
+    <div id="box">
+        <div class="blockA">
+            <div class="image">
+                <img id="image1" alt="">
+                <br>
+                <button id="edit" onclick="Edit()" class="btn btn-danger glyphicon glyphicon-edit"></button>
+                <button id="Save" onclick="Save()" class="btn btn-success">Save</button>
+            </div>
+        </div>
+        <br>
+        <div class="content container">
+            <div class="col-md-6">
+            <label>Customer Name:</label>
+            <h2 id="Name" class="input form-control"></h2><br>
+            <label>Customer  Phone Number:</label>
+            <h2 id="Phone" class="input form-control"></h2><br>
+            <label>Customer Address:</label>
+            <h2 id="Address" class="input form-control"></h2><br>
+            </div>
+            <div class="col-md-6">
+            <label>Customer Email:</label>
+            <h2 id="Email" class="input form-control"></h2><br>
+            <label>Balance:</label>
+            <h2 id="Balance" class="input form-control"></h2><br>
+            <label>Account created:</label>
+            <h2 id="Date" class="input form-control"></h2><br>
+            </div>
+        </div>
+    </div>
+    <div id="modal" class="col-md-4 col-sm-8 col-xs-10">
+        <h1>Add Items</h1>
+        <span class="cross" onclick="Close()">&times;</span>
+            <div class="pop col-md-6 col-sm-6">
+                <label id="label">Item:</label>
+                <input type="text" id="Item" class="form-control" placeholder="Enter the Item Name">
+                <label id="label">Brand:</label>
+                <input type="text" id="Brand" class="form-control" placeholder="Enter the Brand Name">
+            </div>
+            <div class="pop col-md-6 col-sm-6">
+                <label id="label">Quantity:</label>
+                <input type="number" id="Qty" class="form-control" placeholder="Enter Quantity">
+                <label id="label">Amount:</label>
+                <input type="number" id="Amt" class="form-control" placeholder="Enter the Amount per Item">
+            </div>
+            
+            <div class="col-md-12 col-sm-12">
+                <br>
+                <button class="btn btn-success" onclick="Next()">Add</button>
+            </div>
+        </div>
+        <div id="modal1" class="col-md-3 col-sm-4 col-xs-10">
+            <h1>Debit Amount</h1>
+            <span class="cross" onclick="Close()">&times;</span>
+                <div class="pop col-md-12 col-sm-12">
+                    <label id="label">Amount:</label>
+                    <input type="number" id="Pay" class="form-control" placeholder="Enter the Amount"> 
+                </div>
+                <div class="col-md-12 col-sm-12">
+                    <br>
+                    <button class="btn btn-success" onclick="Deduct()">Debit</button>
+                </div>
+            </div>
+            <div id="modal2" class="col-md-4 col-sm-8 col-xs-10">
+        <h1>Check Items</h1>
+        <span class="cross" onclick="Close()">&times;</span>
+            <div class="col-md-12">
+                <table class="table table-bordered table-hover table-striped table-condensed">
+                    <thead>
+                        <th>Item</th>
+                        <th>Brand</th>
+                        <th>Quantity</th>
+                        <th>Amount</th>
+                        <th>Sub-Total</th>
+                    </thead>
+                    <tbody id="tbody1">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <br>
+                <button class="btn btn-success" onclick="Final()">Final</button>
+            </div>
+        </div>
+        <div id="modal3" class="col-md-4 col-sm-8 col-xs-10">
+            <h1>Change Info.</h1>
+            <span class="cross" onclick="Close()">&times;</span>
+              <div class="pop col-md-6 col-sm-6">
+                <label id="label1">Name:</label>
+                <input type="text" class="form-control" id="CName" placeholder="Customer Name">
+                <label id="label1">Phone Number:</label>
+                <input type="number" class="form-control" id="CPhone" placeholder="Customer Phone Number">
+              </div>
+                <div class="pop col-md-6 col-sm-6">
+                    <label id="label1">Email:</label>
+                    <input type="text" id="CEmail" class="form-control" placeholder="Customer Email">
+                    <label id="label1">Address:</label>
+                    <input type="text" id="CAddress" class="form-control" placeholder="Customer Address">
+              </div>
+
+
+                <div class="col-md-12 col-sm-12">
+                    <br>
+                    <button class="btn btn-success" onclick="Change()">Change</button>
+                </div>
+            </div>
+    <div id="box2" class="container">
+        <div class="container">
+            <h1 class="heading" align="center">Transaction Details</h1>
+            <br>
+            <div class="container">
+                <div class="col-md-6 col-sm-6">
+                    <h2 class="i" id="name"></h2>
+                    <h2 class="i" id="phone"></h2>
+                    <h2 class="i" id="address"></h2>
+                    
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <h2 class="i" id="email"></h2>
+                    <h2 class="i" id="balance"></h2>
+                    <button id="down" onclick="Download()" class="btn btn-primary">Pdf</button>
+                    <button id="down1" class="btn btn-primary">Print</button>
+                    <button id="down2" onclick="Debit()" class="btn btn-danger">Debit</button>
+                    <button id="down3" onclick="Credit()" class="btn btn-success">Credit</button>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <table id="table" class="table table-hover table-bordered table-striped table-condensed">
+                <thead>
+                    <th>S.No</th>
+                    <th>Item Name</th>
+                    <th>Brand</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                    <th>Sub-Total</th>
+                    <th>Time</th>
+                </thead>
+                <tbody id="tbody" onclick="Close()">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
+
+    <script>
+        var  firebaseConfig = {
+  apiKey: "AIzaSyA-teYBGhAa7KmYa2IW9wx66VUdmhsqzvI",
+  authDomain: "billing-565b3.firebaseapp.com",
+  databaseURL: "https://billing-565b3-default-rtdb.firebaseio.com",
+  projectId: "billing-565b3",
+  storageBucket: "billing-565b3.appspot.com",
+  messagingSenderId: "1079915732213",
+  appId: "1:1079915732213:web:eea86fe01231d9cba6f9bc"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+Transaction()
+var Obj;
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+function Next()
+{
+            document.getElementById("tbody1").innerHTML=""
+            key=JSON.parse(localStorage.getItem("Key"))
+            var item=document.getElementById("Item").value
+            var brand=document.getElementById("Brand").value
+            var qty=(document.getElementById("Qty").value)
+            var amt=(document.getElementById("Amt").value)
+            var d=new Date()
+            var date=`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
+            var time=`${d.toLocaleTimeString()}`
+            var subt=amt*qty
+            if(item=="" || brand=="" || qty=="" || amt=="")
+            {
+                alert("Field is Empty")
+                window.location.reload()  
+            }
+            else
+            {
+                Obj={
+                Item:item,
+                Brand:brand,
+                Qty:parseInt(qty),
+                Amt:parseInt(amt),
+                SubTotal:subt,
+                Date:date,
+                Time:time,
+            }
+            
+            document.getElementById("modal").style.display="none"
+            document.getElementById("modal2").style.display="block"
+
+            row1=document.createElement("tr")
+            cell11=document.createElement("td")
+            cell12=document.createElement("td")
+            cell13=document.createElement("td")
+            cell14=document.createElement("td")
+            cell15=document.createElement("td")
+
+
+            cell11.innerHTML=Obj.Item
+            cell12.innerHTML=Obj.Brand
+            cell13.innerHTML=Obj.Qty
+            cell14.innerHTML=Obj.Amt
+            cell15.innerHTML=Obj.SubTotal
+
+
+            row1.append(cell11)
+            row1.append(cell12)
+            row1.append(cell13)
+            row1.append(cell14)
+            row1.append(cell15)
+            document.getElementById("tbody1").append(row1)
+            }
+}
+function Final()
+{
+    AccountKey=JSON.parse(localStorage.getItem("AccountKey"))
+    key=JSON.parse(localStorage.getItem("Key"))
+    document.getElementById("tbody").innerHTML=""
+    if(Obj!="")
+    {
+        var obj2;
+           firebase.database().ref().child(`Admin/${AccountKey}/Customers`).on("value",function(snap)
+           {
+            obj=snap.val()
+            obj1=obj[key]
+            obj2=obj[key].Transaction
+            if(obj2==null)
+            {
+                obj3=({...obj1,Transaction:[Obj],Balance:Obj.SubTotal})
+            }
+            else
+            {
+                balance=parseInt(obj1.Balance)+(Obj.SubTotal)
+                obj2.push(Obj)
+                obj3=({...obj1,Transaction:obj2,Balance:balance})
+            }
+        })
+            firebase.database().ref().child(`Admin/${AccountKey}/Customers/${key}`).set(obj3)
+            Close()
+            Clear()
+    }
+}
+function Edit()
+{
+    
+var file=document.createElement("input")
+file.type="file"
+file.click()
+file.onchange=function(event)
+{
+    var url=event.target.files[0]
+    var ext=url.name.split(".")
+    if(ext[1]=="png" || ext[1]=="jpeg" || ext[1]=="PNG" || ext[1]=="jpg")
+    {
+        var reader=new FileReader()
+        reader.readAsDataURL(url)
+        reader.onload=function()
+        {
+            document.getElementById("image1").src=(reader.result)
+            document.getElementById("edit").style.display="none"
+            document.getElementById("Save").style.display="block"
+        }
+    }
+    else
+    {
+        alert("Only png,jpeg and jpg image supported")
+    }
+}
+}
+function Save()
+{
+            AccountKey=JSON.parse(localStorage.getItem("AccountKey"))
+            key=JSON.parse(localStorage.getItem("Key"))
+            image=document.getElementById("image1").src
+            firebase.database().ref().child(`Admin/${AccountKey}/Customers`).on("value",function(snap)
+            {
+                Obj=snap.val()
+                if(Obj==null)
+                {
+                    alert("Time Out. Try Again")
+                }
+                else
+                {
+                    if(Obj[key]==null)
+                    {
+                        alert("Error Occured. Try again later")
+                    }
+                    else
+                    {
+                        var obj=Obj[key]
+                        var obj1={...obj,Image:image}
+                        firebase.database().ref().child(`Admin/${AccountKey}/Customers/${key}`).update(obj1)
+                        alert("Image Updated")
+                        document.getElementById("edit").style.display="block"
+                        document.getElementById("Save").style.display="none"
+                        setTimeout(function()
+                        {
+                            window.location.reload()
+                        },1000)
+                    }
+                }
+            })
+}
+function Credit()
+{
+    document.getElementsByClassName("overlay")[0].style.display="block"
+    document.getElementById("tbody").style.opacity="0.3"
+    document.getElementById("down").style.opacity="0.5"
+    document.getElementById("down1").style.opacity="0.5"
+    document.getElementById("down2").style.opacity="0.5"
+    document.getElementById("down3").style.opacity="0.5"
+    document.getElementById("modal").style.display="block"
+}
+function Debit()
+{
+    document.getElementsByClassName("overlay")[0].style.display="block"
+    document.getElementById("down").style.opacity="0.5"
+    document.getElementById("down1").style.opacity="0.5"
+    document.getElementById("down2").style.opacity="0.5"
+    document.getElementById("down3").style.opacity="0.5"
+    document.getElementById("tbody").style.opacity="0.3"
+    document.getElementById("modal1").style.display="block"
+}
+function Clear()
+{
+document.getElementById("Item").value=""
+document.getElementById("Brand").value=""
+document.getElementById("Qty").value=""
+document.getElementById("Amt").value=""
+document.getElementById("Pay").value=""
+document.getElementById("CName").value=""
+document.getElementById("CPhone").value=""
+document.getElementById("CEmail").value=""
+document.getElementById("CAddress").value=""
+}
+function Deduct()
+{
+            AccountKey=JSON.parse(localStorage.getItem("AccountKey"))
+            pay=document.getElementById("Pay").value
+            if(pay!="")
+            {
+                var d=new Date()
+                var date=`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
+                var time=`${d.toLocaleTimeString()}`
+                var Obj={
+                 Pay:pay,
+                 Date:date,
+                 Time:time,
+                }
+                key=JSON.parse(localStorage.getItem("Key"))
+                firebase.database().ref().child(`Admin/${AccountKey}/Customers`).on("value",function(snap)
+                {
+                    obj=snap.val()
+                    obj1=obj[key]
+                    obj2=obj1.Transaction
+                })
+                if(obj2==null)
+                {
+                    balance=obj1.Balance-pay
+                    obj3=({...obj1,Balance:balance,Transaction:[Obj]});  
+                }
+                else
+                {
+                    balance=(obj1.Balance)-pay
+                    obj2.push(Obj)
+                    obj3=({...obj1,Balance:balance,Transaction:obj2})
+                }
+                firebase.database().ref().child(`Admin/${AccountKey}/Customers/${key}`).set(obj3)
+                Close()
+                Clear()
+            }
+            else
+            {
+                alert("Field is Empty")
+                window.location.reload()
+            }
+}
+function Close()
+{
+    document.getElementsByClassName("overlay")[0].style.display="none"
+    document.getElementById("down").style.opacity="1"
+    document.getElementById("down1").style.opacity="1"
+    document.getElementById("down2").style.opacity="1"
+    document.getElementById("down3").style.opacity="1"
+    document.getElementById("tbody").style.opacity="3"
+    document.getElementById("image1").style.opacity="2"
+    document.getElementsByClassName("input")[0].style.opacity="2"
+    document.getElementsByClassName("input")[1].style.opacity="2"
+    document.getElementsByClassName("input")[2].style.opacity="2"
+    document.getElementsByClassName("input")[3].style.opacity="2"
+    document.getElementsByClassName("input")[4].style.opacity="2"
+    document.getElementsByClassName("input")[5].style.opacity="2"
+    document.getElementById("modal").style.display="none" 
+    document.getElementById("modal1").style.display="none"
+    document.getElementById("modal2").style.display="none"
+    document.getElementById("modal3").style.display="none"
+    document.getElementById("Details").style.color="#818181"
+    document.getElementById("Details").style.backgroundColor=""
+    Transaction()
+}
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+function Transaction()
+{
+    AccountKey=JSON.parse(localStorage.getItem("AccountKey"))
+    key=JSON.parse(localStorage.getItem("Key"))
+    document.getElementById("box").style.display="none"
+    document.getElementById("box2").style.display="block"
+    document.getElementById("trans").style.backgroundColor="#5768f0"
+    document.getElementById("trans").style.color="#fff"
+    document.getElementById("Details").style.backgroundColor=""
+    document.getElementById("Details").style.color="#818181"
+    document.getElementById("Account").style.backgroundColor=""
+    document.getElementById("Account").style.color="#818181"
+    firebase.database().ref().child(`Admin/${AccountKey}/Customers`).on("value",function(Snap)
+    {
+        Obj=Snap.val()
+        document.getElementById("name").innerHTML=`Name:-${Obj[key].Name}`
+        document.getElementById("phone").innerHTML=`Mobile:-${Obj[key].Phone}`
+        document.getElementById("email").innerHTML=`Email:-${Obj[key].Email}`
+        document.getElementById("address").innerHTML=`Address:-${Obj[key].Address}`
+        document.getElementById("balance").innerHTML=`Balance:-₹${Obj[key].Balance}`
+    })
+    date()
+}
+function AllAcc()
+{
+    window.location.href="ShowAccount.html"
+}
+function Download()
+        {
+            document.getElementById("down").style.display="none"
+            document.getElementById("down1").style.display="none"
+            document.getElementById("down2").style.display="none"
+            document.getElementById("down3").style.display="none"
+            table=document.getElementById("box2")
+            var opt = {
+                margin: 0.5,
+                filename: 'table.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2},
+                jsPDF: { unit: 'in', format: 'a2', orientation: 'portrait' }
+            };
+           html2pdf().from(table).set(opt).save()
+          setTimeout(function()
+          {
+            document.getElementById("down").style.display="block"
+            document.getElementById("down1").style.display="block"
+            document.getElementById("down2").style.display="block"
+            document.getElementById("down3").style.display="block"
+          },500)
+        }
+function date()
+           {
+            AccountKey=JSON.parse(localStorage.getItem("AccountKey"))
+               var Arr=[]
+               key=JSON.parse(localStorage.getItem("Key"))
+                firebase.database().ref().child(`Admin/${AccountKey}/Customers`).on("value",function(snap)
+                 {
+                    Obj=(snap.val());
+                    if(Obj==null)
+                    {
+                         document.getElementById("tbody").innerHTML=""
+                            record=document.createElement("th")
+                            record.style.textAlign="center"
+                            record.style.fontSize="20px"
+                            record.innerHTML="No Records Found"
+                            document.getElementById("tbody").append(record)
+                    }
+                    else
+                    { 
+                        if(Obj[key].Transaction==null)
+                        {
+                            document.getElementById("tbody").innerHTML=""
+                            record=document.createElement("th")
+                            record.style.textAlign="center"
+                            record.style.fontSize="20px"
+                            record.innerHTML="No Records Found"
+                            document.getElementById("tbody").append(record)
+                        }
+                        else
+                        {
+                            Obj[key].Transaction.map(function(obj)
+                              {
+                                 Arr.push(obj.Date)
+                             })
+                             var array=new Set(Arr)
+                             var newarr=[...array]
+                             TransShow(newarr)
+                        }
+                    }
+                })
+           }
+function TransShow(arr)
+{
+            AccountKey=JSON.parse(localStorage.getItem("AccountKey"))
+            document.getElementById("tbody").innerHTML=""
+            key=JSON.parse(localStorage.getItem("Key"))
+            firebase.database().ref().child(`Admin/${AccountKey}/Customers`).on("value",function(snap)
+            {
+                document.getElementById("tbody").innerHTML=""
+                obj=snap.val()
+                trans=obj[key].Transaction
+                arr.reverse().map(function(date)
+                {
+                    head=document.createElement("th")
+                    head.style.textAlign ="left"
+                    head.innerHTML=`Date:${date}`
+                    document.getElementById("tbody").append(head)
+                    var sno=0
+                    var total=0;
+                    trans.map(function(Obj)
+                    {
+                        if(date==Obj.Date)
+                        {  
+                            if(Obj.Pay==null)
+                            {
+                                sno=sno+1
+                            total=total+Obj.SubTotal
+                            Table(sno,Obj.Item,Obj.Brand,Obj.Qty,Obj.Amt,Obj.SubTotal,Obj.Time)
+                            }
+                            else
+                            {
+                                total=total-Obj.Pay
+                            Table1(Obj.Pay,total,Obj.Time)
+                            }
+                        }
+                    })
+                        row1=document.createElement("tr")
+                        cell=document.createElement("td")
+                        cell1=document.createElement("td")
+                        cell2=document.createElement("td")
+                        cell3=document.createElement("td")
+                        cell4=document.createElement("td")
+                        cell5=document.createElement("td")
+                        cell4.innerHTML="Total  ="
+                        cell5.innerHTML=total
+                        row1.append(cell)
+                        row1.append(cell1)
+                        row1.append(cell2)
+                        row1.append(cell3)
+                        row1.append(cell4)
+                        row1.append(cell5)
+                        document.getElementById("tbody").append(row1)
+
+                })
+            })
+}
+function Table(sno,item,brand,qty,amt,subtotal,time)
+           {
+           row= document.createElement("tr")
+           cell= document.createElement("td")
+           cell1= document.createElement("td")
+           cell2= document.createElement("td")
+           cell3= document.createElement("td")
+           cell4= document.createElement("td")
+           cell5= document.createElement("td")
+           cell6= document.createElement("td")
+           cell.innerHTML=sno
+           cell1.innerHTML=item
+           cell2.innerHTML=brand
+           cell3.innerHTML=qty
+           cell4.innerHTML=amt
+           cell5.innerHTML=subtotal
+           cell6.innerHTML=time
+
+           
+           row.append(cell)
+           row.append(cell1)
+           row.append(cell2)
+           row.append(cell3)
+           row.append(cell4)
+           row.append(cell5)
+           row.append(cell6)
+           document.getElementById("tbody").append(row)
+           }
+function Table1(pay,total,time)
+           {
+           row= document.createElement("tr")
+           cell= document.createElement("td")
+           cell1= document.createElement("td")
+           cell2= document.createElement("td")
+           cell3= document.createElement("td")
+           cell4= document.createElement("td")
+           cell5= document.createElement("td")
+           cell6= document.createElement("td")
+
+            cell.innerHTML=""
+           cell1.innerHTML="Amount payed by the Customer"
+           cell1.style.fontWeight="600"
+           cell2.innerHTML=""
+           cell3.innerHTML=""
+           cell4.innerHTML=""
+           cell5.innerHTML=`- ${pay}`
+           cell6.innerHTML=time
+           row.append(cell)
+           row.append(cell1)
+           row.append(cell2)
+           row.append(cell3)
+           row.append(cell4)
+           row.append(cell5)
+           row.append(cell6)
+           document.getElementById("tbody").append(row)
+           }
+function Account()
+{
+    Show()
+    document.getElementById("box2").style.display="none"
+    document.getElementById("box").style.display="block"
+    document.getElementById("Account").style.backgroundColor="#5768f0"
+    document.getElementById("Account").style.color="#fff"
+    document.getElementById("trans").style.backgroundColor=""
+    document.getElementById("trans").style.color="#818181"
+    document.getElementById("Details").style.backgroundColor=""
+    document.getElementById("Details").style.color="#818181"
+}
+function Show()
+        {
+            AccountKey=JSON.parse(localStorage.getItem("AccountKey"))
+           key=JSON.parse(localStorage.getItem("Key"))
+           firebase.database().ref().child(`Admin/${AccountKey}/Customers`).on("value",function(snap)
+           {
+            Obj=snap.val()
+            document.getElementById("Name").innerHTML=Obj[key].Name
+            document.getElementById("Phone").innerHTML=Obj[key].Phone
+            document.getElementById("Email").innerHTML=Obj[key].Email
+            document.getElementById("Address").innerHTML=Obj[key].Address
+            document.getElementById("Date").innerHTML=Obj[key].Date
+            document.getElementById("Balance").innerHTML=`₹${Obj[key].Balance}`
+            document.getElementById("image1").src=Obj[key].Image            
+           })
+        }
+function Details()
+{
+    document.getElementById("Details").style.backgroundColor="#5768f0"
+    document.getElementById("Details").style.color="#fff"
+    document.getElementById("Account").style.backgroundColor=""
+    document.getElementById("Account").style.color="#818181"
+    document.getElementById("trans").style.backgroundColor=""
+    document.getElementById("trans").style.color="#818181"
+    document.getElementById("modal3").style.display="block"
+    document.getElementById("tbody").style.opacity="0.3"
+    document.getElementById("down").style.opacity="0.5"
+    document.getElementById("down1").style.opacity="0.5"
+    document.getElementById("down2").style.opacity="0.5"
+    document.getElementById("down3").style.opacity="0.5"
+    document.getElementsByClassName("overlay")[0].style.display="block"
+    document.getElementById("image1").style.opacity="0.5"
+    document.getElementsByClassName("input")[0].style.opacity="0.5"
+    document.getElementsByClassName("input")[1].style.opacity="0.5"
+    document.getElementsByClassName("input")[2].style.opacity="0.5"
+    document.getElementsByClassName("input")[3].style.opacity="0.5"
+    document.getElementsByClassName("input")[4].style.opacity="0.5"
+    document.getElementsByClassName("input")[5].style.opacity="0.5"
+    ChangingDetails()
+}
+function ChangingDetails()
+{
+    AccountKey=JSON.parse(localStorage.getItem("AccountKey"))
+    key=JSON.parse(localStorage.getItem("Key"))
+    firebase.database().ref().child(`Admin/${AccountKey}/Customers`).on("value",function(snap)
+    {
+        Obj=snap.val()
+        if(Obj==null)
+        {
+            alert("Error Occured.Try Again Later.")
+            Close()
+        }
+        else
+        {
+            document.getElementById("CName").value=Obj[key].Name
+            document.getElementById("CPhone").value=Obj[key].Phone
+            document.getElementById("CEmail").value=Obj[key].Email
+            document.getElementById("CAddress").value=Obj[key].Address
+        }
+    })
+}
+function Change()
+{
+    AccountKey=JSON.parse(localStorage.getItem("AccountKey"))
+    key=JSON.parse(localStorage.getItem("Key"))
+   name= document.getElementById("CName").value
+   phone= document.getElementById("CPhone").value
+   email= document.getElementById("CEmail").value
+   address= document.getElementById("CAddress").value
+   firebase.database().ref().child(`Admin/${AccountKey}/Customers`).on("value",function(snap)
+    {
+        Obj=snap.val()
+        if(Obj==null)
+        {
+            alert("Error Occured.Try Again Later.")
+        }
+        else
+        {
+            obj=Obj[key]
+            obj1={...obj,Name:name,Phone:phone,Address:address,Email:email}
+            firebase.database().ref().child(`Admin/${AccountKey}/Customers/${key}`).update(obj1)
+            setTimeout(function()
+            {
+                Clear()
+                alert("Changes Updated")
+                window.location.href="ShowAccount.html"
+            },1000)
+        }
+    })
+
+}
+
+</script>
+</body>
+</html>

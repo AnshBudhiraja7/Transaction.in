@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Account</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        .input
+        {
+            width: 80%;
+            margin-bottom: 1%;
+        }
+        label
+        {
+            font-size: 25px;
+        }
+        .overlay
+        {
+            height: 100vh;
+            position: fixed;
+            top: 0%;
+            width: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: -1;
+            opacity: 1;
+            transition: 1s;
+            display: none;
+            cursor: pointer;
+        }
+        #modal
+        {
+            height: 40vh;
+            background-color: white;
+            position: absolute;
+            top: 44%;
+            left: 50%;
+            transform: translate(-50%,-50%); 
+            box-shadow: 0px 0px 10px 3px grey;
+            z-index: 1;
+            transition: 2s;
+            padding: 0px 20px;
+            display: none;
+            text-align: center;
+        }
+        #modal1
+        {
+            height: 40vh;
+            background-color: white;
+            position: absolute;
+            top: 44%;
+            left: 50%;
+            transform: translate(-50%,-50%); 
+            box-shadow: 0px 0px 10px 3px grey;
+            z-index: 1;
+            transition: 2s;
+            padding: 0px 20px;
+            display: none;
+            text-align: center;
+        }
+        .cross
+        {
+            font-size: 30px;
+            font-weight: 600;
+            margin: 0%;
+            position: absolute;
+            right: 3%;
+            top: 2%;
+            cursor: pointer;
+        }
+        .pop
+        {
+            text-align: left;
+            font-size: 20px;
+        }
+        h1
+        {
+            text-align: center;
+        }
+        .btns{
+            display: flex;
+            justify-content: center;
+            margin: auto;
+        }
+        .btn1
+        {
+            margin-left: -10%;
+            margin-right: 1%;
+        }
+        #i
+        {
+            margin-top: -3px;
+            padding: 0%;
+            margin-bottom: 0%;
+            color: red;
+       }
+       #i2
+        {
+            margin-top: -3px;
+            padding: 0%;
+            margin-bottom: 0%;
+            color: red;
+       }
+       #btn2
+       {
+        margin-right: 1%;
+       }
+    </style>
+</head>
+<body>
+    <div class="overlay" onclick="Close()"></div>
+    <div id="modal" class="col-md-3 col-sm-6 col-xs-10">
+        <h1>Login</h1>
+        <span class="cross" onclick="Close()" >&times;</span>
+        <div class="pop col-md-12 col-sm-12">
+            <label id="label">Username:</label>
+            <input type="text" class="form-control" id="Username" placeholder="Enter the Username">
+            <label id="label">Password:</label>
+            <input type="password" class="form-control" id="Password" placeholder="Enter the Password">
+        </div>
+            <div class="col-md-12 col-sm-12">
+                <br>
+                <button class="btn btn-success" onclick="Login()">Login</button>
+            </div>
+        </div>
+
+        <div id="modal1" class="col-md-3 col-sm-6 col-xs-10">
+            <h1>Admin Login</h1>
+            <span class="cross" onclick="Close()" >&times;</span>
+            <div class="pop col-md-12 col-sm-12">
+                <label id="label">Username:</label>
+                <input type="text" class="form-control" id="AUsername" placeholder="Enter the Username">
+                <label id="label">Password:</label>
+                <input type="password" class="form-control" id="APassword" placeholder="Enter the Password">
+            </div>
+                <div class="col-md-12 col-sm-12">
+                    <br>
+                    <button class="btn btn-success" onclick="AdminLogin()">Login</button>
+                </div>
+            </div>
+
+        <div class="container">
+            <h1>Create your Account</h1>
+            <hr>
+            <br>
+    <div class="col-md-6 col-sm-6" onclick="Close()">
+        <label>Name:</label>
+        <input type="text" id="name" class="input form-control" placeholder="Enter your Name"><br>
+        <label>Phone Number:</label>
+        <input type="number" id="phone" oninput="phonecheck()" class="input form-control" placeholder="Enter your Phone Number">
+        <h5 id="i"></h5>
+        <label>Email:</label>
+        <input type="email" id="email" class="input form-control" placeholder="Enter your Email">
+        <label>Address:</label>
+        <input type="text" id="address" class="input form-control" placeholder="Enter your Work Address">
+        </div>
+        <div class="col-md-6 col-sm-6" onclick="Close()">
+            <label>Business Name:</label>
+            <input type="text" id="bname" class="input form-control" placeholder="Enter your Business Name or Shop Name">
+            <label>Business Type:</label>
+            <input type="text" id="btype" class="input form-control" placeholder="Enter Business Type">
+            <label>Username:</label>
+            <input type="text" id="user" oninput="usercheck()" class="input form-control" placeholder="Enter your Username">
+            <h5 id="i2">Don't use space between your username</h5>
+            <label>Password:</label>
+            <input type="password" id="pass" class="input form-control" placeholder="Enter your Password">
+            <br>
+            </div>
+            <div class="btns col-md-12">
+            <button class="btn1 btn btn-success" id="btn1" onclick="Create()">Sign Up</button>
+            <button class="btn btn-success" id="btn2" onclick="Show()">Login </button>
+            <button class="btn btn-danger" onclick="Show1()">Admin Login</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
+
+    <script>
+          var  firebaseConfig = {
+  apiKey: "AIzaSyA-teYBGhAa7KmYa2IW9wx66VUdmhsqzvI",
+  authDomain: "billing-565b3.firebaseapp.com",
+  databaseURL: "https://billing-565b3-default-rtdb.firebaseio.com",
+  projectId: "billing-565b3",
+  storageBucket: "billing-565b3.appspot.com",
+  messagingSenderId: "1079915732213",
+  appId: "1:1079915732213:web:eea86fe01231d9cba6f9bc"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+        function Login()
+{
+    Username=document.getElementById("Username").value
+    Password=document.getElementById("Password").value
+    if(Username!="" && Password!="")
+    {
+        firebase.database().ref().child("Admin").on("value",function(snap)
+        {
+            Obj=snap.val()
+            if(Obj==null)
+            {
+                alert("Error Occured.Try Again Later")
+            }
+            else
+            {
+                var count=0
+                Allkey=Object.keys(Obj)
+                Allkey.map(function(key)
+                {
+                    if(Obj[key].User==Username && Obj[key].Pass==Password)
+                    {   
+                        count=count+1
+                        localStorage.setItem("AccountKey",JSON.stringify(key))
+                        document.getElementById("Username").value=""
+                        document.getElementById("Password").value=""
+                        window.location.href="CreateAccount.html"
+                    }
+                })
+                if(count==0)
+                {
+                    alert("Wrong Username and Password")
+                }
+            }
+        })
+    }
+    else
+    {
+        alert("Field is Empty")
+    }
+
+}
+        function Show()
+        {
+            localStorage.clear()
+            document.getElementById("modal").style.display="block"
+            document.getElementsByClassName("overlay")[0].style.display="block"
+            document.getElementsByClassName("input")[0].style.opacity="0.5"
+            document.getElementsByClassName("input")[1].style.opacity="0.5"
+            document.getElementsByClassName("input")[2].style.opacity="0.5"
+            document.getElementsByClassName("input")[3].style.opacity="0.5"
+            document.getElementsByClassName("input")[4].style.opacity="0.5"
+            document.getElementsByClassName("input")[5].style.opacity="0.5"
+            document.getElementsByClassName("input")[6].style.opacity="0.5"
+            document.getElementsByClassName("input")[7].style.opacity="0.5"
+            document.getElementsByClassName("btns")[0].style.opacity="0.5"
+        }
+        function Close()
+        {
+            document.getElementById("modal").style.display="none"
+            document.getElementById("modal1").style.display="none"
+            document.getElementsByClassName("overlay")[0].style.display="none"
+            document.getElementsByClassName("input")[0].style.opacity="1"
+            document.getElementsByClassName("input")[1].style.opacity="1"
+            document.getElementsByClassName("input")[2].style.opacity="1"
+            document.getElementsByClassName("input")[3].style.opacity="1"
+            document.getElementsByClassName("input")[4].style.opacity="1"
+            document.getElementsByClassName("input")[5].style.opacity="1"
+            document.getElementsByClassName("input")[6].style.opacity="1"
+            document.getElementsByClassName("input")[7].style.opacity="1"
+            document.getElementsByClassName("btns")[0].style.opacity="1"
+        }
+        function Create()
+        {
+            name=document.getElementById("name").value
+            phone=document.getElementById("phone").value
+            email=document.getElementById("email").value
+            address=document.getElementById("address").value
+            bname=document.getElementById("bname").value
+            btype=document.getElementById("btype").value
+            user=document.getElementById("user").value
+            pass=document.getElementById("pass").value
+            if(name!="" && phone!="" && email!="" && address!="" && bname!="" && btype!="" && user!="" && pass!="")
+            {
+                var Obj={
+                Name:name,
+                Phone:phone,
+                Email:email,
+                Address:address,
+                BName:bname,
+                BType:btype,
+                User:user,
+                Pass:pass,
+            }
+            firebase.database().ref().child("Admin").push(Obj)
+            Clear()
+            alert("Account Created")
+            }
+            else
+            {
+                alert("Field is Empty")
+            }
+           
+        }
+       function phonecheck()
+       {
+        phone=document.getElementById("phone").value
+        if(phone=="")
+        {
+            document.getElementById("i").innerHTML=""
+            document.getElementById("btn1").style.display="block"
+        }
+        else
+        {
+            firebase.database().ref().child(`Admin`).on("value",function(Snap)
+        {
+            Obj=(Snap.val());
+            if(Obj==null)
+            {
+                document.getElementById("i").innerHTML="No Account Found on this phone Number"
+                document.getElementById("btn1").style.display="block"
+                document.getElementById("i").style.color="#5cb85d"
+            }
+            else
+            {
+                Allkey=Object.keys(Obj)
+               phn= Allkey.filter(function(key)
+                {
+                    return phone==Obj[key].Phone
+                })
+                if(phn!="")
+                {
+                    document.getElementById("i").innerHTML="Account already exist on this Phone Number"
+                    document.getElementById("i").style.color="red"
+                    document.getElementById("btn1").style.display="none"
+                }
+                else
+                {
+                    document.getElementById("i").innerHTML="No Account Found on this phone Number"
+                    document.getElementById("btn1").style.display="block"
+                    document.getElementById("i").style.color="#5cb85d"
+                }
+            }
+        })
+        }
+       }
+       function usercheck()
+       {
+        user=document.getElementById("user").value
+        if(user=="")
+        {
+            document.getElementById("i2").innerHTML="Don't use space between your username"
+            document.getElementById("i2").style.color="red"
+            document.getElementById("btn1").style.display="block"
+        }
+        else
+        {
+            firebase.database().ref().child(`Admin`).on("value",function(Snap)
+        {
+            Obj=(Snap.val());
+            if(Obj==null)
+            {
+                document.getElementById("i2").innerHTML="No Account Found on this Username"
+                document.getElementById("btn1").style.display="block"
+                document.getElementById("i2").style.color="#5cb85d"
+            }
+            else
+            {
+                Allkey=Object.keys(Obj)
+               usr= Allkey.filter(function(key)
+                {
+                    return user==Obj[key].User
+                })
+                if(usr!="")
+                {
+                    document.getElementById("i2").innerHTML="This Username is already taken"
+                    document.getElementById("i2").style.color="red"
+                    document.getElementById("btn1").style.display="none"
+                }
+                else
+                {
+                    document.getElementById("i2").innerHTML="Username is perfect"
+                    document.getElementById("btn1").style.display="block"
+                    document.getElementById("i2").style.color="#5cb85d"
+                }
+            }
+        })
+        }
+       }
+       function Clear()
+        {
+            document.getElementById("name").value=""
+            document.getElementById("phone").value=""
+            document.getElementById("email").value=""
+            document.getElementById("address").value=""
+            document.getElementById("bname").value=""
+            document.getElementById("btype").value=""
+            document.getElementById("user").value=""
+            document.getElementById("pass").value=""
+            document.getElementById("i").innerHTML=""
+            document.getElementById("i2").innerHTML=""
+            document.getElementById("btn1").style.display="block"
+        }
+        function Show1()
+        {
+            document.getElementsByClassName("overlay")[0].style.display="block"
+            document.getElementsByClassName("overlay")[0].style.display="block"
+            document.getElementsByClassName("input")[0].style.opacity="0.5"
+            document.getElementsByClassName("input")[1].style.opacity="0.5"
+            document.getElementsByClassName("input")[2].style.opacity="0.5"
+            document.getElementsByClassName("input")[3].style.opacity="0.5"
+            document.getElementsByClassName("input")[4].style.opacity="0.5"
+            document.getElementsByClassName("input")[5].style.opacity="0.5"
+            document.getElementsByClassName("input")[6].style.opacity="0.5"
+            document.getElementsByClassName("input")[7].style.opacity="0.5"
+            document.getElementsByClassName("btns")[0].style.opacity="0.5"
+            document.getElementById("modal1").style.display="block"
+        }
+        function AdminLogin()
+        {
+            AUsername=document.getElementById("AUsername").value
+            APassword=document.getElementById("APassword").value
+            if(AUsername!="" && APassword!="")
+            {
+                if(AUsername=="Admin" && APassword=="Admin123")
+                {
+                    window.location.href="AdminShow.html"
+                }
+                else
+                {
+                    alert("Wrong Username and Password")
+                }
+            }
+            else
+            {
+                alert("Field is Empty")
+            }
+        }
+    </script>
+    
+</body>
+</html>

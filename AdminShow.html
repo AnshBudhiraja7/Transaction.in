@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Account</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        a,a:hover
+        {
+            text-decoration: none;
+            color: white;
+        }
+        #table1
+        {
+        display: none;     
+        }
+        #phn
+        {
+            width: 40%;
+            float: left;
+            margin-right: 0.5%;
+        }
+        #btn
+        {
+            float: left;
+            margin-right: 0.5%;
+        }
+        
+    </style>
+</head>
+<body>
+    <br>
+    <br>
+    
+    <div class="container">
+        <br>
+        <button class="btn btn-danger" id="btn"><a href="index.html">Log Out</a> </button>
+        <input type="text" placeholder="Search by Name or Phone Number" id="phn" oninput="Search()" list="recommended" class="form-control">
+        <br><br>
+        <table id="table" class="table table-bordered table-striped table-hover">
+            <thead>
+                <th>S.No.</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Business Name</th>
+                <th>Business Type</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Admin->Key</th>
+                <!-- <th>Date</th> -->
+                <th>Operation</th>
+            </thead>
+            <tbody id="tbody">
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
+
+    <script>
+        var  firebaseConfig = {
+  apiKey: "AIzaSyA-teYBGhAa7KmYa2IW9wx66VUdmhsqzvI",
+  authDomain: "billing-565b3.firebaseapp.com",
+  databaseURL: "https://billing-565b3-default-rtdb.firebaseio.com",
+  projectId: "billing-565b3",
+  storageBucket: "billing-565b3.appspot.com",
+  messagingSenderId: "1079915732213",
+  appId: "1:1079915732213:web:eea86fe01231d9cba6f9bc"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+function Search() {
+            var Search = document.getElementById("phn").value
+            document.getElementById("tbody").innerHTML = ""
+            firebase.database().ref().child(`Admin`).on("value", function (AllObj) {
+                Obj = AllObj.val()
+                if (Obj == null) {
+                    document.getElementById("tbody").innerHTML=""
+            record=document.createElement("th")
+            record.style.textAlign="center"
+            record.style.fontSize="20px"
+            record.innerHTML="No Records Found"
+            document.getElementById("tbody").append(record)
+                }
+                else {
+                    if (Search == "") {
+                        Show()
+                    }
+                    else {
+                        document.getElementById("tbody").innerHTML = ""
+                        KeyArr = Object.keys(Obj)
+                        KeyArr.reverse().map(function (key, index) {
+                            if (Obj[key].Phone.match(Search) || Obj[key].Name.match(Search)) {
+                                Table(index+1,Obj[key].Name,Obj[key].Phone,Obj[key].Email,Obj[key].Address,Obj[key].BName,Obj[key].BType,Obj[key].User,Obj[key].Pass,key)
+                            }
+
+                        })
+                    }
+                }
+            })
+}
+Show()
+function Show()
+{
+    document.getElementById("tbody").innerHTML=""
+    firebase.database().ref().child("Admin").on("value",function(snap)
+    {
+        Obj=(snap.val())
+        if(Obj==null)
+        {
+            document.getElementById("tbody").innerHTML=""
+            record=document.createElement("th")
+            record.style.textAlign="center"
+            record.style.fontSize="20px"
+            record.innerHTML="No Records Found"
+            document.getElementById("tbody").append(record)
+        }
+        else
+        {   
+            document.getElementById("tbody").innerHTML=""
+            Allkey= Object.keys(Obj)
+            Allkey.reverse().map(function(key,index)
+        {
+            Table(index+1,Obj[key].Name,Obj[key].Phone,Obj[key].Email,Obj[key].Address,Obj[key].BName,Obj[key].BType,Obj[key].User,Obj[key].Pass,key)
+        }
+        )
+        } })
+     }
+    
+function Table(index,name,phone,email,address,bname,btype,user,pass,key)
+{
+    row=document.createElement("tr")
+    cell1=document.createElement("td")
+    cell2=document.createElement("td")
+    cell3=document.createElement("td")
+    cell4=document.createElement("td")
+    cell5=document.createElement("td")
+    cell6=document.createElement("td")
+    cell7=document.createElement("td")
+    cell8=document.createElement("td")
+    cell9=document.createElement("td")
+    cell10=document.createElement("td")
+    cell11=document.createElement("td")
+
+    cell1.innerHTML=index
+    cell2.innerHTML=name
+    cell3.innerHTML=phone
+    cell4.innerHTML=email
+    cell5.innerHTML=address
+    cell6.innerHTML=bname
+    cell7.innerHTML=btype
+    cell8.innerHTML=user
+    cell9.innerHTML=pass
+    cell10.innerHTML=key
+
+
+
+    
+    delbtn= document.createElement("button")
+    delbtn.innerHTML="Delete"
+    delbtn.className="btn btn-danger"
+    delbtn.id=key
+    delbtn.setAttribute("onclick","Del(this)")
+    cell11.append(delbtn)
+    
+
+    row.append(cell1)
+    row.append(cell2)
+    row.append(cell3)
+    row.append(cell4)
+    row.append(cell5)
+    row.append(cell6)
+    row.append(cell7)
+    row.append(cell8)
+    row.append(cell9)
+    row.append(cell10)
+    row.append(cell11)
+    document.getElementById("tbody").append(row)
+}
+function Del(Obutton)
+{
+    firebase.database().ref().child(`Admin/${Obutton.id}`).remove()
+}
+</script>
+</body>
+</html>
