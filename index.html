@@ -44,22 +44,6 @@
             text-align: center;
             overflow-y: auto;
         }
-        #modal1
-        {
-            height: 40vh;
-            background-color: white;
-            position: absolute;
-            top: 44%;
-            left: 50%;
-            transform: translate(-50%,-50%); 
-            box-shadow: 0px 0px 10px 3px grey;
-            z-index: 1;
-            transition: 2s;
-            padding: 0px 20px;
-            display: none;
-            text-align: center;
-            overflow-y: auto;
-        }
         .cross
         {
             font-size: 30px;
@@ -126,21 +110,6 @@
             </div>
         </div>
 
-        <div id="modal1" class="col-md-3 col-sm-6 col-xs-10">
-            <h1>Admin Login</h1>
-            <span class="cross" onclick="Close()" >&times;</span>
-            <div class="pop col-md-12 col-sm-12">
-                <label id="label">Username:</label>
-                <input type="text" class="form-control" id="AUsername" placeholder="Enter the Username">
-                <label id="label">Password:</label>
-                <input type="password" class="form-control" id="APassword" placeholder="Enter the Password">
-            </div>
-                <div class="col-md-12 col-sm-12">
-                    <br>
-                    <button class="btn btn-success" onclick="AdminLogin()">Login</button>
-                </div>
-            </div>
-
         <div class="container">
             <h1>Create your Account</h1>
             <hr>
@@ -171,7 +140,6 @@
             <div class="btns col-md-12">
             <button class="btn1 btn btn-success" id="btn1" onclick="Create()">Sign Up</button>
             <button class="btn btn-success" id="btn2" onclick="Show()">Login </button>
-            <button class="btn btn-danger" onclick="Show1()">Admin Login</button>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -206,8 +174,14 @@ firebase.initializeApp(firebaseConfig);
     Username=document.getElementById("Username").value
     Password=document.getElementById("Password").value
     if(Username!="" && Password!="")
-    {
-        firebase.database().ref().child("Admin").on("value",function(snap)
+    {   
+        if(Username=="Admin" && Password=="Admin123")
+        {
+            window.location.href="AdminShow.html"
+        }
+        else
+        {
+            firebase.database().ref().child("Admin").on("value",function(snap)
         {
             Obj=snap.val()
             if(Obj==null)
@@ -235,6 +209,9 @@ firebase.initializeApp(firebaseConfig);
                 }
             }
         })
+
+        }
+        
     }
     else
     {
@@ -260,7 +237,6 @@ firebase.initializeApp(firebaseConfig);
         function Close()
         {
             document.getElementById("modal").style.display="none"
-            document.getElementById("modal1").style.display="none"
             document.getElementsByClassName("overlay")[0].style.display="none"
             document.getElementsByClassName("input")[0].style.opacity="1"
             document.getElementsByClassName("input")[1].style.opacity="1"
@@ -406,42 +382,7 @@ firebase.initializeApp(firebaseConfig);
             document.getElementById("i2").innerHTML=""
             document.getElementById("btn1").style.display="block"
         }
-        function Show1()
-        {
-            document.getElementsByClassName("overlay")[0].style.display="block"
-            document.getElementsByClassName("overlay")[0].style.display="block"
-            document.getElementsByClassName("input")[0].style.opacity="0.5"
-            document.getElementsByClassName("input")[1].style.opacity="0.5"
-            document.getElementsByClassName("input")[2].style.opacity="0.5"
-            document.getElementsByClassName("input")[3].style.opacity="0.5"
-            document.getElementsByClassName("input")[4].style.opacity="0.5"
-            document.getElementsByClassName("input")[5].style.opacity="0.5"
-            document.getElementsByClassName("input")[6].style.opacity="0.5"
-            document.getElementsByClassName("input")[7].style.opacity="0.5"
-            document.getElementsByClassName("btns")[0].style.opacity="0.5"
-            document.getElementById("modal1").style.display="block"
-        }
-        function AdminLogin()
-        {
-            AUsername=document.getElementById("AUsername").value
-            APassword=document.getElementById("APassword").value
-            if(AUsername!="" && APassword!="")
-            {
-                if(AUsername=="Admin" && APassword=="Admin123")
-                {
-                    window.location.href="AdminShow.html"
-                }
-                else
-                {
-                    alert("Wrong Username and Password")
-                }
-            }
-            else
-            {
-                alert("Field is Empty")
-            }
-        }
-    </script>
+        </script>
     
 </body>
 </html>
