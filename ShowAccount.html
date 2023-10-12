@@ -26,6 +26,12 @@
             float: left;
             margin-right: 0.5%;
         }
+        .center-message {
+      text-align: center;
+      vertical-align: middle;
+      font-size: 25px;
+      font-weight: 600;
+    }
         
     </style>
 </head>
@@ -116,11 +122,13 @@ function Search() {
                 Obj = AllObj.val()
                 if (Obj == null) {
                     document.getElementById("tbody").innerHTML=""
-            record=document.createElement("th")
-            record.style.textAlign="center"
-            record.style.fontSize="20px"
-            record.innerHTML="No Records Found"
-            document.getElementById("tbody").append(record)
+            row3=document.createElement("tr")
+            td=document.createElement("td")
+            td.innerHTML="No Record Found"
+            td.colSpan="8"
+            td.className="center-message"
+            row3.append(td)
+            document.getElementById("tbody").append(row3)
                 }
                 else {
                     if (Search == "") {
@@ -150,11 +158,13 @@ function Show()
         if(Obj==null)
         {
             document.getElementById("tbody").innerHTML=""
-            record=document.createElement("th")
-            record.style.textAlign="center"
-            record.style.fontSize="20px"
-            record.innerHTML="No Records Found"
-            document.getElementById("tbody").append(record)
+            row3=document.createElement("tr")
+            td=document.createElement("td")
+            td.innerHTML="No Record Found"
+            td.colSpan="8"
+            td.className="center-message"
+            row3.append(td)
+            document.getElementById("tbody").append(row3)
         }
         else
         {   
@@ -233,11 +243,13 @@ function Get()
         if(obj==null)
         {
             document.getElementById("tbody").innerHTML=""
-            record=document.createElement("th")
-            record.style.textAlign="center"
-            record.style.fontSize="20px"
-            record.innerHTML="No Records Found"
-            document.getElementById("tbody").append(record)
+            row3=document.createElement("tr")
+            td=document.createElement("td")
+            td.innerHTML="No Record Found"
+            td.colSpan="8"
+            td.className="center-message"
+            row3.append(td)
+            document.getElementById("tbody").append(row3)
         }
         else
         {

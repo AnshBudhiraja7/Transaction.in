@@ -26,20 +26,99 @@
             float: left;
             margin-right: 0.5%;
         }
+        .overlay
+        {
+            height: 100vh;
+            position: fixed;
+            top: 0%;
+            width: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: -1;
+            opacity: 1;
+            transition: 1s;
+            display: none;
+            cursor: pointer;
+        }
+        #modal
+        {
+            height: 75vh;
+            background-color: white;
+            position: absolute;
+            top: 44%;
+            left: 50%;
+            transform: translate(-50%,-50%); 
+            box-shadow: 0px 0px 10px 3px grey;
+            z-index: 1;
+            transition: 2s;
+            padding: 0px 20px;
+            display: none;
+            text-align: center;
+        }
+        .cross
+        {
+            font-size: 30px;
+            font-weight: 600;
+            margin: 0%;
+            position: absolute;
+            right: 3%;
+            top: 2%;
+            cursor: pointer;
+        }
+        .pop
+        {
+            text-align: left;
+            font-size: 20px;
+        }
+        .center-message {
+      text-align: center;
+      vertical-align: middle;
+      font-size: 25px;
+      font-weight: 600;
+    }
         
     </style>
 </head>
 <body>
+    <div class="overlay" onclick="Close()"></div>
+    <div id="modal" class="col-md-6 col-sm-8 col-xs-12">
+        <h1>Edit Details</h1>
+        <span class="cross" onclick="Close()">&times;</span>
+            <div class="pop col-md-6 col-sm-6">
+                <label id="label">Name:</label>
+                <input type="text" id="Name" class="form-control" placeholder="Enter the Name">
+                <label id="label">Phone Number:</label>
+                <input type="number" id="Phone" class="form-control" placeholder="Enter the Phone Number">
+                <label id="label">Business Name:</label>
+                <input type="text" id="BName" class="form-control" placeholder="Enter the Business Name">
+                <label id="label">Business Type:</label>
+                <input type="text" id="BType" class="form-control" placeholder="Enter the Business Type">
+            </div>
+            <div class="pop col-md-6 col-sm-6">
+                <label id="label">Email:</label>
+                <input type="email" id="Email" class="form-control" placeholder="Enter Email">
+                <label id="label">Address:</label>
+                <input type="text" id="Address" class="form-control" placeholder="Enter the Address">
+                <label id="label">Username:</label>
+                <input type="text" id="User" class="form-control" placeholder="Enter the Username">
+                <label id="label">Password:</label>
+                <input type="password" id="Pass" class="form-control" placeholder="Enter the Password">
+            </div>
+            
+            <div class="col-md-12 col-sm-12">
+                <br>
+                <button class="btn btn-success" onclick="Update()">Update Changes</button>
+            </div>
+        </div>
     <br>
     <br>
     
     <div class="container">
         <br>
         <button class="btn btn-danger" id="btn"><a href="index.html">Log Out</a> </button>
-        <input type="text" placeholder="Search by Name or Phone Number" id="phn" oninput="Search()" list="recommended" class="form-control">
+        <input type="text" placeholder="Search by Name or Phone Number" id="phn" oninput="Search()" class="form-control">
         <br><br>
         <table id="table" class="table table-bordered table-striped table-hover">
-            <thead>
+            <thead onclick="Close()">
                 <th>S.No.</th>
                 <th>Name</th>
                 <th>Phone Number</th>
@@ -49,8 +128,8 @@
                 <th>Business Type</th>
                 <th>Username</th>
                 <th>Password</th>
+                <th>Date</th>
                 <th>Admin->Key</th>
-                <!-- <th>Date</th> -->
                 <th>Operation</th>
             </thead>
             <tbody id="tbody">
@@ -93,11 +172,13 @@ function Search() {
                 Obj = AllObj.val()
                 if (Obj == null) {
                     document.getElementById("tbody").innerHTML=""
-            record=document.createElement("th")
-            record.style.textAlign="center"
-            record.style.fontSize="20px"
-            record.innerHTML="No Records Found"
-            document.getElementById("tbody").append(record)
+            row3=document.createElement("tr")
+            td=document.createElement("td")
+            td.innerHTML="No Record Found"
+            td.colSpan="12"
+            td.className="center-message"
+            row3.append(td)
+            document.getElementById("tbody").append(row3)
                 }
                 else {
                     if (Search == "") {
@@ -108,7 +189,7 @@ function Search() {
                         KeyArr = Object.keys(Obj)
                         KeyArr.reverse().map(function (key, index) {
                             if (Obj[key].Phone.match(Search) || Obj[key].Name.match(Search)) {
-                                Table(index+1,Obj[key].Name,Obj[key].Phone,Obj[key].Email,Obj[key].Address,Obj[key].BName,Obj[key].BType,Obj[key].User,Obj[key].Pass,key)
+                                Table(index+1,Obj[key].Name,Obj[key].Phone,Obj[key].Email,Obj[key].Address,Obj[key].BName,Obj[key].BType,Obj[key].User,Obj[key].Pass,key,Obj[key].Date)
                             }
 
                         })
@@ -126,11 +207,13 @@ function Show()
         if(Obj==null)
         {
             document.getElementById("tbody").innerHTML=""
-            record=document.createElement("th")
-            record.style.textAlign="center"
-            record.style.fontSize="20px"
-            record.innerHTML="No Records Found"
-            document.getElementById("tbody").append(record)
+            row3=document.createElement("tr")
+            td=document.createElement("td")
+            td.innerHTML="No Record Found"
+            td.colSpan="12"
+            td.className="center-message"
+            row3.append(td)
+            document.getElementById("tbody").append(row3)
         }
         else
         {   
@@ -138,13 +221,13 @@ function Show()
             Allkey= Object.keys(Obj)
             Allkey.reverse().map(function(key,index)
         {
-            Table(index+1,Obj[key].Name,Obj[key].Phone,Obj[key].Email,Obj[key].Address,Obj[key].BName,Obj[key].BType,Obj[key].User,Obj[key].Pass,key)
+            Table(index+1,Obj[key].Name,Obj[key].Phone,Obj[key].Email,Obj[key].Address,Obj[key].BName,Obj[key].BType,Obj[key].User,Obj[key].Pass,key,Obj[key].Date)
         }
         )
         } })
      }
     
-function Table(index,name,phone,email,address,bname,btype,user,pass,key)
+function Table(index,name,phone,email,address,bname,btype,user,pass,key,date)
 {
     row=document.createElement("tr")
     cell1=document.createElement("td")
@@ -158,7 +241,9 @@ function Table(index,name,phone,email,address,bname,btype,user,pass,key)
     cell9=document.createElement("td")
     cell10=document.createElement("td")
     cell11=document.createElement("td")
-
+    cell12=document.createElement("td")
+    
+    
     cell1.innerHTML=index
     cell2.innerHTML=name
     cell3.innerHTML=phone
@@ -168,17 +253,24 @@ function Table(index,name,phone,email,address,bname,btype,user,pass,key)
     cell7.innerHTML=btype
     cell8.innerHTML=user
     cell9.innerHTML=pass
-    cell10.innerHTML=key
+    cell10.innerHTML=date
+    cell11.innerHTML=key
 
 
 
+    editbtn= document.createElement("button")
+    editbtn.innerHTML="Edit"
+    editbtn.className="btn btn-success"
+    editbtn.id=key
+    editbtn.setAttribute("onclick","Edit(this)")
+    cell12.append(editbtn)
     
     delbtn= document.createElement("button")
     delbtn.innerHTML="Delete"
     delbtn.className="btn btn-danger"
     delbtn.id=key
     delbtn.setAttribute("onclick","Del(this)")
-    cell11.append(delbtn)
+    cell12.append(delbtn)
     
 
     row.append(cell1)
@@ -192,11 +284,95 @@ function Table(index,name,phone,email,address,bname,btype,user,pass,key)
     row.append(cell9)
     row.append(cell10)
     row.append(cell11)
+    row.append(cell12)
     document.getElementById("tbody").append(row)
 }
 function Del(Obutton)
 {
     firebase.database().ref().child(`Admin/${Obutton.id}`).remove()
+}
+function Edit(Obutton)
+{   localStorage.clear()
+    document.getElementById("modal").style.display="block"
+    document.getElementsByClassName("overlay")[0].style.display="block"
+    document.getElementById("tbody").style.opacity="0.5"
+    document.getElementById("phn").style.opacity="0.5"
+    document.getElementById("btn").style.opacity="0.5"
+    firebase.database().ref().child(`Admin`).on("value",function(snap)
+    {
+        Obj=snap.val()
+        if(Obj==null)
+        {
+            window.location.reload()
+        }
+        else
+        {   
+            localStorage.setItem("ChangeKey",JSON.stringify(Obutton.id))
+            document.getElementById("Name").value=Obj[Obutton.id].Name
+            document.getElementById("Phone").value=Obj[Obutton.id].Phone
+            document.getElementById("BName").value=Obj[Obutton.id].BName
+            document.getElementById("BType").value=Obj[Obutton.id].BType
+            document.getElementById("Email").value=Obj[Obutton.id].Email
+            document.getElementById("Address").value=Obj[Obutton.id].Address
+            document.getElementById("User").value=Obj[Obutton.id].User
+            document.getElementById("Pass").value=Obj[Obutton.id].Pass
+        }
+    })
+}
+function Close()
+{
+    document.getElementById("modal").style.display="none"
+    document.getElementsByClassName("overlay")[0].style.display="none"
+    document.getElementById("tbody").style.opacity="2"
+    document.getElementById("phn").style.opacity="2"
+    document.getElementById("btn").style.opacity="2"
+}
+function Clear()
+{
+document.getElementById("Name").value=""
+document.getElementById("Phone").value=""
+document.getElementById("BName").value=""
+document.getElementById("BType").value=""
+document.getElementById("Email").value=""
+document.getElementById("Address").value=""
+document.getElementById("User").value=""
+document.getElementById("Pass").value=""
+}
+function Update()
+{
+    ChangeKey=JSON.parse(localStorage.getItem("ChangeKey"))
+     name =document.getElementById("Name").value
+     phone=document.getElementById("Phone").value
+    bname =document.getElementById("BName").value
+    btype =document.getElementById("BType").value
+     email =document.getElementById("Email").value
+     address =document.getElementById("Address").value
+     user =document.getElementById("User").value
+     pass =document.getElementById("Pass").value
+
+    if(name!="" && phone!="" && bname!="" && btype!="" && email!="" && address!="" && user!="" && pass!="")
+     {
+        firebase.database().ref().child("Admin").on("value",function(snap)
+     {
+        Obj=snap.val()
+        if(Obj==null)
+        {
+            window.location.reload()
+        }
+        else
+        {
+            obj=Obj[ChangeKey]
+           obj1= {...obj,"Name":name,"Phone":phone, "BName":bname, "BType":btype, "Email":email, "Address":address, "User":user, "Pass":pass}
+           firebase.database().ref().child(`Admin/${ChangeKey}`).update(obj1)
+           Clear()
+           Close()
+        }
+     })
+    }
+    else
+    {
+        alert("Field is Empty")
+    }
 }
 </script>
 </body>

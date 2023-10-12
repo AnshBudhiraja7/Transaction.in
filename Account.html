@@ -254,6 +254,12 @@
         {
             margin: auto;
         }
+        .center-message {
+      text-align: center;
+      vertical-align: middle;
+      font-size: 25px;
+      font-weight: 600;
+    }
     </style>
 </head>
 <body>
@@ -747,23 +753,27 @@ function date()
                     Obj=(snap.val());
                     if(Obj==null)
                     {
-                         document.getElementById("tbody").innerHTML=""
-                            record=document.createElement("th")
-                            record.style.textAlign="center"
-                            record.style.fontSize="20px"
-                            record.innerHTML="No Records Found"
-                            document.getElementById("tbody").append(record)
+                        document.getElementById("tbody").innerHTML=""
+            row3=document.createElement("tr")
+            td=document.createElement("td")
+            td.innerHTML="No Record Found"
+            td.colSpan="7"
+            td.className="center-message"
+            row3.append(td)
+            document.getElementById("tbody").append(row3)
                     }
                     else
                     { 
                         if(Obj[key].Transaction==null)
                         {
                             document.getElementById("tbody").innerHTML=""
-                            record=document.createElement("th")
-                            record.style.textAlign="center"
-                            record.style.fontSize="20px"
-                            record.innerHTML="No Records Found"
-                            document.getElementById("tbody").append(record)
+            row3=document.createElement("tr")
+            td=document.createElement("td")
+            td.innerHTML="No Record Found"
+            td.colSpan="7"
+            td.className="center-message"
+            row3.append(td)
+            document.getElementById("tbody").append(row3)
                         }
                         else
                         {
@@ -908,7 +918,6 @@ function Show()
            firebase.database().ref().child(`Admin/${AccountKey}/Customers`).on("value",function(snap)
            {
             Obj=snap.val()
-               console.log(Obj[key].Image)
             document.getElementById("Name").innerHTML=Obj[key].Name
             document.getElementById("Phone").innerHTML=Obj[key].Phone
             document.getElementById("Email").innerHTML=Obj[key].Email
