@@ -336,7 +336,15 @@ firebase.initializeApp(firebaseConfig);
         }
         else
         {
-            firebase.database().ref().child(`Admin`).on("value",function(Snap)
+            if(user=="Admin" || user=="admin")
+            {
+                document.getElementById("i2").innerHTML="This Username is already taken"
+                document.getElementById("i2").style.color="red"
+                document.getElementById("btn1").style.display="none"
+            }   
+            else
+            {
+                firebase.database().ref().child(`Admin`).on("value",function(Snap)
         {
             Obj=(Snap.val());
             if(Obj==null)
@@ -366,6 +374,8 @@ firebase.initializeApp(firebaseConfig);
                 }
             }
         })
+
+            } 
         }
        }
        function Clear()
