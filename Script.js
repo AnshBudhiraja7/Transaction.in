@@ -18,7 +18,7 @@ function Login() {
     Username = document.getElementById("Username").value
     Password = document.getElementById("Password").value
     if (Username != "" && Password != "") {
-        if (Username == "Admin" && Password == "Admin123") {
+        if (Username == "Admin" && Password == "Admin12345678910") {
             window.location.href = "AdminAccounts.html"
         }
         else {
