@@ -10,6 +10,10 @@ var firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+document.addEventListener("contextmenu", function (e){
+    e.preventDefault();
+}, false);
+
 function Login() {
     Username = document.getElementById("Username").value
     Password = document.getElementById("Password").value
