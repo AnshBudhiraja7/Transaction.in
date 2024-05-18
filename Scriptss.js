@@ -10,16 +10,101 @@ var firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+function replaceElementsWithMessage() {
+    document.body.innerHTML=""
+    div=document.createElement("div")
+        div.className="container"
+        h1= document.createElement("h1")
+        h1.className="text-center"
+        h1.innerHTML="You are acessing developer tools option or inspect element"
+        para=document.createElement("p")
+        para.className="text-center"
+        para.innerHTML="You can not access them. Please close them"
+
+        para2=document.createElement("p")
+        span1=document.createElement("span")
+        span1.innerHTML="After closing them. "
+        span2=document.createElement("span")
+        span2.innerHTML=" to continue to the page"
+        a1=document.createElement("a")
+        a1.href="index.html"
+        a1.innerHTML="Click here"
+        para2.className="text-center"
+        para2.append(span1)
+        para2.append(a1)
+        para2.append(span2)
+        div.append(h1)
+        div.append(para)
+        div.append(para2)
+        document.body.append(div)
+}
+// Call the function when the inspect element is opened
+document.addEventListener('keydown', function(event) {
+    if (event.keyCode === 123) { // 123 is the keycode for F12 (Inspect Element)
+        replaceElementsWithMessage();
+    }
+});
 document.addEventListener("contextmenu", function (e){
     e.preventDefault();
 }, false);
-
+document.addEventListener("keydown", function(e) {
+    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
+        e.preventDefault();
+        alert("Inspect elements is disabled.");
+    }
+});
+(function() {
+    var devtoolsOpen = false;
+    function detectDevTools() {
+        const threshold = 160; // This can be adjusted based on your needs
+        const widthDiff = window.outerWidth - window.innerWidth > threshold;
+        const heightDiff = window.outerHeight - window.innerHeight > threshold;
+        if (widthDiff || heightDiff) {
+            devtoolsOpen = true;
+            // Your custom logic when developer tools are detected
+           replaceElementsWithMessage()
+            // window.location = 'http://example.com/devtools-detected';
+        } else {
+            devtoolsOpen = false;
+        }
+    }
+    setInterval(detectDevTools, 100);
+})();
 function Login() {
     Username = document.getElementById("Username").value
     Password = document.getElementById("Password").value
     if (Username != "" && Password != "") {
-        if (Username == "Admin" && Password == "Admin12345678910") {
-            window.location.href = "AdminAccounts.html"
+    firebase.database().ref().child("AccountDetails").once("value",function(snap)
+    {
+        if(snap.val())
+        {
+            if (Username ==snap.val().Username && Password == snap.val().Password) {
+                window.location.href = "AdminAccounts.html"
+            }
+            else {
+                firebase.database().ref().child("Admin").on("value", function (snap) {
+                    Obj = snap.val()
+                    if (Obj == null) {
+                        alert("Error Occured.Try Again Later")
+                    }
+                    else {
+                        var count = 0
+                        Allkey = Object.keys(Obj)
+                        Allkey.map(function (key) {
+                            if (Obj[key].User == Username && Obj[key].Pass == Password) {
+                                count = count + 1
+                                localStorage.setItem("AccountKey", JSON.stringify(key))
+                                document.getElementById("Username").value = ""
+                                document.getElementById("Password").value = ""
+                                window.location.href = "CreateAccount.html"
+                            }
+                        })
+                        if (count == 0) {
+                            alert("Wrong Username and Password")
+                        }
+                    }
+                })
+            }  
         }
         else {
             firebase.database().ref().child("Admin").on("value", function (snap) {
@@ -44,7 +129,8 @@ function Login() {
                     }
                 }
             })
-        }
+        }  
+    })
     }
     else {
         alert("Field is Empty")
@@ -150,7 +236,7 @@ function usercheck() {
         document.getElementById("btn1").style.display = "block"
     }
     else {
-        if (user == "Admin" || user == "admin") {
+        if (user == "Admin" || user == "admin" || user == "Admin@Ansh") {
             document.getElementById("i2").innerHTML = "This Username is already taken"
             document.getElementById("i2").style.color = "red"
             document.getElementById("btn1").style.display = "none"
